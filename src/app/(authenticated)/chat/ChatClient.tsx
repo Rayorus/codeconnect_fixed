@@ -148,6 +148,8 @@ export default function ChatClient({
 
     setNewMsg("");
     setSending(false);
+    // Auto-refresh messages after sending
+    await loadMessages(activeConvId);
   }
 
   const activeConv = convList.find((c) => c.id === activeConvId);

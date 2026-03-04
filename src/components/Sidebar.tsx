@@ -26,7 +26,7 @@ const navItems = [
   { href: "/profile", icon: User, label: "Profile" },
 ];
 
-export default function Sidebar({ username }: { username: string }) {
+export default function Sidebar({ username, mobileOpen = false, onClose }: { username: string; mobileOpen?: boolean; onClose?: () => void }) {
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClient();
@@ -54,9 +54,7 @@ export default function Sidebar({ username }: { username: string }) {
     return () => { mounted = false };
   }, [supabase]);
 
-  // Mobile drawer support
-  const mobileOpen = typeof window !== "undefined" && (window as any).sidebarOpen;
-  const onClose = typeof window !== "undefined" && (window as any).onSidebarClose;
+  // Mobile drawer support: props from AppShell
 
   return (
     <aside
