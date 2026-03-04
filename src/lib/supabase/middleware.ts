@@ -34,6 +34,13 @@ export async function updateSession(request: NextRequest) {
   const publicRoutes = ["/auth/login", "/auth/signup", "/auth/callback"];
   const isPublicRoute = publicRoutes.some((r) => pathname.startsWith(r));
 
+  // Redirect signed-in users away from landing page
+  if (user && pathname === "/") {
+    const url = request.nextUrl.clone();
+    url.pathname = "/dashboard";
+    return NextResponse.redirect(url);
+  }
+
   if (!user && !isPublicRoute && pathname !== "/") {
     const url = request.nextUrl.clone();
     url.pathname = "/auth/login";

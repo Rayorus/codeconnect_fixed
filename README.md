@@ -96,7 +96,7 @@ Open [http://localhost:3000](http://localhost:3000)
 ```
 src/
 ├── app/
-│   ├── (app)/              # Authenticated app routes
+│   ├── (authenticated)/   # Authenticated app routes
 │   │   ├── dashboard/      # Home dashboard
 │   │   ├── feed/           # Doubt posts + [id]/ detail
 │   │   ├── friends/        # Friends management
