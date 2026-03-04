@@ -54,79 +54,65 @@ export default function Sidebar({ username, mobileOpen = false, onClose }: { use
     return () => { mounted = false };
   }, [supabase]);
 
-  // Mobile drawer support: props from AppShell
-
-  return (
-    <aside
-      className={
-        cn(
-          "fixed left-0 top-0 h-full w-56 bg-lc-surface border-r border-lc-border flex flex-col z-30",
-          "hidden md:flex",
-          mobileOpen ? "flex animate-slide-in" : ""
-        )
-      }
-      style={mobileOpen ? { display: "flex" } : undefined}
+  // Mobile close button
+  { mobileOpen && (
+    <button
+      className="absolute top-4 right-4 z-40 p-2 rounded-lg bg-lc-card border border-lc-border md:hidden"
+      aria-label="Close sidebar"
+      onClick={onClose}
     >
-      {/* Mobile close button */}
-      {mobileOpen && (
-        <button
-          className="absolute top-4 right-4 z-40 p-2 rounded-lg bg-lc-card border border-lc-border md:hidden"
-          aria-label="Close sidebar"
-          onClick={onClose}
-        >
-          <span className="block w-6 h-0.5 bg-lc-text rotate-45 mb-1" />
-          <span className="block w-6 h-0.5 bg-lc-text -rotate-45" />
-        </button>
-      )}
-      {/* Logo */}
-      <div className="px-4 py-5 border-b border-lc-border">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <span className="text-lc-accent font-mono font-bold text-lg">&lt;CC/&gt;</span>
-          <span className="text-lc-text font-semibold">CodeConnect</span>
-        </Link>
-      </div>
+      <span className="block w-6 h-0.5 bg-lc-text rotate-45 mb-1" />
+      <span className="block w-6 h-0.5 bg-lc-text -rotate-45" />
+    </button>
+  )}
 
-      {/* Navigation */}
-      <nav className="flex-1 px-2 py-4 space-y-1">
-        {navItems.map(({ href, icon: Icon, label }) => {
-          const isActive = pathname === href || pathname.startsWith(href + "/");
-          return (
-            <Link
-              key={href}
-              href={href}
-              className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
-                isActive
-                  ? "bg-lc-accent/10 text-lc-accent"
-                  : "text-lc-muted hover:text-lc-text hover:bg-lc-hover"
-              )}
-            >
-              <Icon size={16} />
-              {label}
-            </Link>
-          );
-        })}
-      </nav>
+  // Logo
+  <div className="px-4 py-5 border-b border-lc-border">
+    <Link href="/dashboard" className="flex items-center gap-2">
+      <span className="text-lc-accent font-mono font-bold text-lg">&lt;CC/&gt;</span>
+      <span className="text-lc-text font-semibold">CodeConnect</span>
+    </Link>
+  </div>
 
-      {/* User + Logout */}
-      <div className="px-2 py-4 border-t border-lc-border space-y-1">
+  // Navigation
+  <nav className="flex-1 px-2 py-4 space-y-1">
+    {navItems.map(({ href, icon: Icon, label }) => {
+      const isActive = pathname === href || pathname.startsWith(href + "/");
+      return (
         <Link
-          href="/profile"
-          className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-lc-hover transition-colors"
+          key={href}
+          href={href}
+          className={cn(
+            "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+            isActive
+              ? "bg-lc-accent/10 text-lc-accent"
+              : "text-lc-muted hover:text-lc-text hover:bg-lc-hover"
+          )}
         >
-          <div className="w-7 h-7 rounded-full bg-lc-accent/20 flex items-center justify-center text-lc-accent text-xs font-bold">
-            {(displayName || username)?.[0]?.toUpperCase()}
-          </div>
-          <span className="text-sm text-lc-text font-mono truncate">{displayName || username}</span>
+          <Icon size={16} />
+          {label}
         </Link>
-        <button
-          onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-lc-muted hover:text-lc-hard hover:bg-lc-hard/10 transition-colors text-sm"
-        >
-          <LogOut size={16} />
-          Sign out
-        </button>
+      );
+    })}
+  </nav>
+
+  // User + Logout
+  <div className="px-2 py-4 border-t border-lc-border space-y-1">
+    <Link
+      href="/profile"
+      className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-lc-hover transition-colors"
+    >
+      <div className="w-7 h-7 rounded-full bg-lc-accent/20 flex items-center justify-center text-lc-accent text-xs font-bold">
+        {(displayName || username)?.[0]?.toUpperCase()}
       </div>
-    </aside>
-  );
+      <span className="text-sm text-lc-text font-mono truncate">{displayName || username}</span>
+    </Link>
+    <button
+      onClick={handleLogout}
+      className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-lc-muted hover:text-lc-hard hover:bg-lc-hard/10 transition-colors text-sm"
+    >
+      <LogOut size={16} />
+      Sign out
+    </button>
+  </div>
 }
