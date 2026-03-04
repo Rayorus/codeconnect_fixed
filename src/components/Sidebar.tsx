@@ -107,12 +107,12 @@ export default function Sidebar({ username, mobileOpen = false, onClose }: { use
         </button>
       </div>
     </aside>
-  );
-      onClick={handleLogout}
-      className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-lc-muted hover:text-lc-hard hover:bg-lc-hard/10 transition-colors text-sm"
-    >
-      <LogOut size={16} />
-      Sign out
-    </button>
+          <button
+            onClick={handleLogout}
+            className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-lc-muted hover:text-lc-hard hover:bg-lc-hard/10 transition-colors text-sm"
+          >
+            <LogOut size={16} />
+            Sign out
+          </button>
   </div>
 }
