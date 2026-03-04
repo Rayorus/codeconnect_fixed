@@ -25,7 +25,7 @@ export default async function DashboardPage() {
   const friendCount = friendsRes.data?.length ?? 0;
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
+    <div className="p-4 max-w-3xl w-full mx-auto">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-lc-text">
           Welcome back, <span className="text-lc-accent font-mono">{profile?.display_name || profile?.username}</span> 👋

@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen bg-lc-bg flex flex-col">
+    <main className="min-h-screen bg-lc-bg flex flex-col w-full px-4">
       {/* Nav */}
       <nav className="border-b border-lc-border px-6 py-4 flex items-center justify-between">
         <div className="flex items-center gap-2">
@@ -26,7 +26,7 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero */}
-      <section className="flex-1 flex flex-col items-center justify-center text-center px-4 py-24">
+      <section className="flex-1 flex flex-col items-center justify-center text-center px-4 py-12 w-full">
         <div className="inline-flex items-center gap-2 bg-lc-surface border border-lc-border rounded-full px-4 py-1.5 mb-8 text-sm text-lc-muted">
           <span className="w-2 h-2 rounded-full bg-lc-easy animate-pulse inline-block" />
           Now in beta — join the community

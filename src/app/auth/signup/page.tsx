@@ -71,8 +71,8 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-lc-bg flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
+    <div className="min-h-screen bg-lc-bg flex items-center justify-center px-4 w-full">
+      <div className="w-full max-w-md mx-auto">
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2">
             <span className="text-lc-accent font-mono font-bold text-2xl">&lt;CC/&gt;</span>
