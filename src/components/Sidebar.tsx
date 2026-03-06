@@ -23,6 +23,17 @@ const navItems = [
   { href: "/progress", icon: TrendingUp, label: "Progress" },
   { href: "/friends", icon: Users, label: "Friends" },
   { href: "/chat", icon: MessageSquare, label: "Messages" },
+  { href: "/ai", icon: function RobotIcon(props: React.SVGProps<SVGSVGElement>) {
+    return (
+      <svg width="22" height="22" viewBox="0 0 40 40" fill="none" {...props}>
+        <rect x="8" y="12" width="24" height="16" rx="6" fill="#fff" stroke="#00796b" strokeWidth="2" />
+        <circle cx="16" cy="20" r="2" fill="#00796b" />
+        <circle cx="24" cy="20" r="2" fill="#00796b" />
+        <rect x="18" y="26" width="4" height="2" rx="1" fill="#00796b" />
+        <rect x="19" y="8" width="2" height="4" rx="1" fill="#00796b" />
+      </svg>
+    );
+  }, label: "AI Mentor" },
   { href: "/profile", icon: User, label: "Profile" },
 ];
 
