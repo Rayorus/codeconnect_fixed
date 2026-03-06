@@ -32,35 +32,43 @@ function AIMentor() {
   };
 
   return (
-    <div style={{ maxWidth: 600, margin: '0 auto', padding: 16 }}>
-      <div style={{ minHeight: 400, background: '#fff', borderRadius: 8, boxShadow: '0 2px 8px #eee', padding: 16, marginBottom: 16, overflowY: 'auto' }}>
+    <div className="max-w-2xl w-full mx-auto py-8 px-2 sm:px-4">
+      <div className="min-h-[400px] bg-lc-card rounded-xl shadow-lg p-4 sm:p-6 mb-6 overflow-y-auto flex flex-col gap-2">
         {messages.map((msg, idx) => (
-          <div key={idx} style={{ textAlign: msg.role === 'user' ? 'right' : 'left', margin: '8px 0' }}>
-            <span style={{ display: 'inline-block', background: msg.role === 'user' ? '#e0f7fa' : '#f1f8e9', padding: 8, borderRadius: 6 }}>{msg.content}</span>
+          <div key={idx} className={msg.role === 'user' ? 'flex justify-end' : 'flex justify-start'}>
+            <span className={msg.role === 'user'
+              ? 'bg-lc-accent text-lc-bg px-4 py-2 rounded-lg max-w-xs text-right'
+              : 'bg-lc-bg text-lc-text px-4 py-2 rounded-lg max-w-xs text-left border border-lc-border'}>
+              {msg.content}
+            </span>
           </div>
         ))}
         {loading && (
-          <div style={{ textAlign: 'left', margin: '8px 0' }}>
-            <span style={{ display: 'inline-block', background: '#f1f8e9', padding: 8, borderRadius: 6 }}>Thinking...</span>
+          <div className="flex justify-start">
+            <span className="bg-lc-bg text-lc-accent px-4 py-2 rounded-lg border border-lc-border">Thinking...</span>
           </div>
         )}
         <div ref={chatEndRef} />
       </div>
       <form
-        style={{ display: 'flex', gap: 8 }}
+        className="flex gap-2"
         onSubmit={e => {
           e.preventDefault();
           sendMessage();
         }}
       >
         <input
-          style={{ flex: 1, padding: 12, borderRadius: 6, border: '1px solid #ccc' }}
+          className="flex-1 px-4 py-3 rounded-lg border border-lc-border bg-lc-bg text-lc-text focus:outline-none focus:ring-2 focus:ring-lc-accent"
           type="text"
           value={input}
           onChange={e => setInput(e.target.value)}
           placeholder="Ask your programming question..."
         />
-        <button style={{ padding: '0 16px', borderRadius: 6, background: '#00796b', color: '#fff', border: 'none' }} type="submit" disabled={loading || !input.trim()}>
+        <button
+          className="px-6 py-3 rounded-lg bg-lc-accent text-lc-bg font-semibold disabled:opacity-50"
+          type="submit"
+          disabled={loading || !input.trim()}
+        >
           Send
         </button>
       </form>
