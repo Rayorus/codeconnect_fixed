@@ -26,7 +26,11 @@ export async function POST(req: Request) {
       ],
     });
 
-    return NextResponse.json({ reply: response.choices[0].message.content });
+    const aiReply = response.choices[0].message.content;
+    console.log('AI reply:', aiReply);
+    // Fallback for empty or invalid reply
+    const safeReply = aiReply && aiReply.trim() && aiReply.trim() !== '.' ? aiReply : 'Sorry, I could not generate an answer. Please try again.';
+    return NextResponse.json({ reply: safeReply });
 
   } catch (error) {
     console.error(error);
