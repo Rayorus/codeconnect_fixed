@@ -35,6 +35,7 @@ const navItems = [
     );
   }, label: "AI Mentor" },
   { href: "/profile", icon: User, label: "Profile" },
+  { href: "/compiler", icon: BarChart3, label: "Compiler" },
 ];
 
 export default function Sidebar({ username, mobileOpen = false, onClose }: { username: string; mobileOpen?: boolean; onClose?: () => void }) {
