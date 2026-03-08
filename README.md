@@ -12,43 +12,7 @@ A social network for LeetCode users — track progress, connect with friends, po
 | Deployment | Vercel |
 | Chat Encryption | CryptoJS (AES) |
 
-## Getting Started
 
-### 1. Clone & Install
-
-```bash
-cd Projects/codeconnect
-npm install
-```
-
-### 2. Set up Supabase
-
-1. Create a new project at [supabase.com](https://supabase.com)
-2. Go to **SQL Editor** and run the full schema: `supabase/schema.sql`
-3. Enable **Realtime** for the `messages`, `conversations`, and `friend_requests` tables
-
-### 3. Configure Environment Variables
-
-Copy `.env.example` to `.env.local` and fill in:
-
-```bash
-cp .env.example .env.local
-```
-
-| Variable | Where to find it |
-|----------|-----------------|
-| `NEXT_PUBLIC_SUPABASE_URL` | Supabase → Settings → API → Project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase → Settings → API → anon public key |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase → Settings → API → service_role key |
-| `NEXT_PUBLIC_CHAT_ENCRYPTION_KEY` | Generate any long random string |
-
-### 4. Run the Development Server
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000)
 
 ## Features
 
