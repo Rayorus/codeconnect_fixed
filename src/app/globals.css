@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --lc-bg: #1a1a1a;
+  --lc-surface: #282828;
+  --lc-card: #2d2d2d;
+  --lc-border: #3e3e3e;
+  --lc-hover: #3a3a3a;
+  --lc-text: #eff1f6;
+  --lc-muted: #8d8d8d;
+  --lc-easy: #00b8a3;
+  --lc-medium: #ffc01e;
+  --lc-hard: #ff375f;
+  --lc-accent: #ffa116;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--lc-bg);
+  color: var(--lc-text);
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code, pre, .font-mono {
+  font-family: 'JetBrains Mono', Menlo, Monaco, Consolas, monospace;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--lc-surface); }
+::-webkit-scrollbar-thumb { background: var(--lc-border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--lc-muted); }
+
+/* Focus ring */
+*:focus-visible {
+  outline: 2px solid var(--lc-accent);
+  outline-offset: 2px;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-fade-in { animation: fadeIn 0.2s ease-out; }
+
+/* Skeleton loader */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--lc-surface) 25%,
+    var(--lc-hover) 50%,
+    var(--lc-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Progress ring */
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.6s ease;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+/* Tag pill */
+.tag-pill {
+  @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-mono;
+  background: rgba(255, 161, 22, 0.1);
+  color: var(--lc-accent);
+  border: 1px solid rgba(255, 161, 22, 0.2);
+}
+
+/* Difficulty badges */
+.badge-easy {
+  @apply text-xs font-medium px-2 py-0.5 rounded;
+  background: rgba(0, 184, 163, 0.1);
+  color: var(--lc-easy);
+}
+.badge-medium {
+  @apply text-xs font-medium px-2 py-0.5 rounded;
+  background: rgba(255, 192, 30, 0.1);
+  color: var(--lc-medium);
+}
+.badge-hard {
+  @apply text-xs font-medium px-2 py-0.5 rounded;
+  background: rgba(255, 55, 95, 0.1);
+  color: var(--lc-hard);
+}
+
+/* Message bubbles */
+.msg-sent {
+  @apply ml-auto rounded-2xl rounded-tr-sm px-4 py-2 max-w-xs text-sm;
+  background: var(--lc-accent);
+  color: #1a1a1a;
+}
+.msg-received {
+  @apply rounded-2xl rounded-tl-sm px-4 py-2 max-w-xs text-sm;
+  background: var(--lc-card);
+  color: var(--lc-text);
+}
