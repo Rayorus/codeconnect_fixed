@@ -55,34 +55,6 @@ A social network for LeetCode users — track progress, connect with friends, po
 - Summary stats cards
 - Linked to live LeetCode data
 
-## Project Structure
-
-```
-src/
-├── app/
-│   ├── (authenticated)/   # Authenticated app routes
-│   │   ├── dashboard/      # Home dashboard
-│   │   ├── feed/           # Doubt posts + [id]/ detail
-│   │   ├── friends/        # Friends management
-│   │   ├── chat/           # Real-time messaging
-│   │   ├── progress/       # LeetCode stats
-│   │   └── profile/        # User profile + LeetCode link
-│   ├── auth/               # Login, signup, callback
-│   └── layout.tsx          # Root layout
-├── components/
-│   └── Sidebar.tsx         # Navigation sidebar
-├── lib/
-│   ├── supabase/           # Client, server, middleware
-│   ├── leetcode.ts         # LeetCode GraphQL integration
-│   ├── encryption.ts       # AES message encryption
-│   └── utils.ts            # Helpers
-├── types/
-│   └── index.ts            # TypeScript interfaces
-└── middleware.ts            # Auth routing middleware
-supabase/
-└── schema.sql              # Full DB schema with RLS
-```
-
 ## Security
 
 - Row Level Security (RLS) on all tables
