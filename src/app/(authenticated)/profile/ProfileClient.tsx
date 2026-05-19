@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { fetchLeetCodeStats, formatLeetCodeStatsForDB } from "@/lib/leetcode";
-import { User, ExternalLink, Check, AlertCircle } from "lucide-react";
+import { User, ExternalLink, Check, AlertCircle, Settings, Link as LinkIcon } from "lucide-react";
 
 interface Profile {
   id: string;
@@ -119,17 +119,20 @@ export default function ProfileClient({ userId, profile }: { userId: string; pro
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 page-enter">
       <div>
-        <h1 className="text-2xl font-bold text-lc-text">Profile</h1>
-        <p className="text-lc-muted text-sm mt-1">Manage your account and LeetCode connection</p>
+        <h1 className="text-xl md:text-3xl font-bold text-cc-text flex items-center gap-2">
+          <Settings size={24} className="text-cc-accent-light" />
+          Profile
+        </h1>
+        <p className="text-cc-muted text-sm mt-1">Manage your account and LeetCode connection</p>
       </div>
 
       {msg && (
-        <div className={`flex items-center gap-2 px-4 py-3 rounded-lg text-sm border ${
+        <div className={`flex items-center gap-2 px-4 py-3 rounded-xl text-sm border animate-fade-in ${
           msg.type === "success"
-            ? "bg-lc-easy/10 border-lc-easy/30 text-lc-easy"
-            : "bg-lc-hard/10 border-lc-hard/30 text-lc-hard"
+            ? "bg-cc-easy/10 border-cc-easy/30 text-cc-easy"
+            : "bg-cc-hard/10 border-cc-hard/30 text-cc-hard"
         }`}>
           {msg.type === "success" ? <Check size={15} /> : <AlertCircle size={15} />}
           {msg.text}
@@ -137,83 +140,102 @@ export default function ProfileClient({ userId, profile }: { userId: string; pro
       )}
 
       {/* Account Info */}
-      <div className="bg-lc-surface border border-lc-border rounded-xl p-6">
-        <h2 className="text-lc-text font-semibold mb-4">Account Info</h2>
-        <div className="flex items-center gap-4 mb-5">
-          <div className="w-16 h-16 rounded-full bg-lc-accent/20 flex items-center justify-center text-lc-accent text-2xl font-bold">
+      <div className="glass-card !p-5 md:!p-7">
+        <h2 className="text-cc-text font-semibold text-base md:text-lg mb-4 md:mb-5">Account Info</h2>
+        <div className="flex items-center gap-4 md:gap-5 mb-5 md:mb-6">
+          <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-cc-accent to-cc-violet flex items-center justify-center text-white text-xl md:text-2xl font-bold">
             {profile?.username?.[0]?.toUpperCase()}
           </div>
           <div>
-            <p className="text-lc-text font-mono font-semibold">@{profile?.username}</p>
-            <p className="text-lc-muted text-sm">{profile?.email}</p>
+            <p className="text-cc-text font-mono font-semibold text-base md:text-lg">@{profile?.username}</p>
+            <p className="text-cc-muted text-sm">{profile?.email}</p>
           </div>
         </div>
 
-        <form onSubmit={handleSave} className="space-y-4">
+        <form onSubmit={handleSave} className="space-y-5">
           <div>
-            <label className="block text-sm text-lc-muted mb-1.5">Display Name</label>
+            <label className="block text-sm text-cc-muted mb-2 font-medium">Display Name</label>
             <input
               type="text"
               value={form.display_name}
               onChange={(e) => setForm({ ...form, display_name: e.target.value })}
               placeholder="Your full name"
-              className="w-full bg-lc-card border border-lc-border rounded-lg px-3 py-2.5 text-sm text-lc-text placeholder-lc-muted/50 focus:border-lc-accent focus:outline-none"
+              className="glass-input w-full"
             />
           </div>
           <div>
-            <label className="block text-sm text-lc-muted mb-1.5">Bio</label>
+            <label className="block text-sm text-cc-muted mb-2 font-medium">Bio</label>
             <textarea
               value={form.bio}
               onChange={(e) => setForm({ ...form, bio: e.target.value })}
               rows={3}
               placeholder="Tell the community about yourself…"
-              className="w-full bg-lc-card border border-lc-border rounded-lg px-3 py-2.5 text-sm text-lc-text placeholder-lc-muted/50 focus:border-lc-accent focus:outline-none resize-none"
+              className="glass-input w-full resize-none"
             />
           </div>
           <button
             type="submit"
             disabled={saving}
-            className="bg-lc-accent text-lc-bg font-semibold px-5 py-2 rounded-lg hover:opacity-90 disabled:opacity-50 transition-opacity text-sm"
+            className="btn-primary text-sm !px-6 !py-2.5"
           >
-            {saving ? "Saving…" : "Save changes"}
+            {saving ? (
+              <span className="flex items-center gap-2">
+                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Saving…
+              </span>
+            ) : "Save changes"}
           </button>
         </form>
       </div>
 
       {/* LeetCode Link */}
-      <div className="bg-lc-surface border border-lc-border rounded-xl p-6">
-        <h2 className="text-lc-text font-semibold mb-1">LeetCode Account</h2>
-        <p className="text-lc-muted text-xs mb-4">Link your LeetCode username to track and display your progress.</p>
+      <div className="glass-card !p-7">
+        <h2 className="text-cc-text font-semibold text-lg mb-1 flex items-center gap-2">
+          <LinkIcon size={16} className="text-cc-easy" />
+          LeetCode Account
+        </h2>
+        <p className="text-cc-muted text-xs mb-5">Link your LeetCode username to track and display your progress.</p>
 
         {profile?.leetcode_username && (
-          <div className="flex items-center gap-2 mb-4 p-3 bg-lc-easy/10 border border-lc-easy/30 rounded-lg">
-            <Check size={14} className="text-lc-easy" />
-            <span className="text-sm text-lc-easy">Linked to </span>
+          <div className="flex items-center gap-2 mb-5 p-3.5 bg-cc-easy/10 border border-cc-easy/25 rounded-xl">
+            <Check size={14} className="text-cc-easy" />
+            <span className="text-sm text-cc-easy">Linked to </span>
             <a
               href={`https://leetcode.com/${profile.leetcode_username}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-sm text-lc-easy hover:underline flex items-center gap-1"
+              className="font-mono text-sm text-cc-easy hover:underline flex items-center gap-1"
             >
               @{profile.leetcode_username} <ExternalLink size={11} />
             </a>
           </div>
         )}
 
-        <div className="flex gap-2">
+        <div className="flex gap-3">
           <input
             type="text"
             value={form.leetcode_username}
             onChange={(e) => setForm({ ...form, leetcode_username: e.target.value })}
             placeholder="Your LeetCode username"
-            className="flex-1 bg-lc-card border border-lc-border rounded-lg px-3 py-2.5 text-sm text-lc-text placeholder-lc-muted/50 focus:border-lc-accent focus:outline-none font-mono"
+            className="glass-input flex-1 font-mono"
           />
           <button
             onClick={handleLinkLeetCode}
             disabled={lcLoading || !form.leetcode_username.trim()}
-            className="bg-lc-accent text-lc-bg font-semibold px-4 py-2 rounded-lg hover:opacity-90 disabled:opacity-50 transition-opacity text-sm whitespace-nowrap"
+            className="btn-primary text-sm !px-5 !py-2.5 whitespace-nowrap"
           >
-            {lcLoading ? "Verifying…" : profile?.leetcode_username ? "Update" : "Link Account"}
+            {lcLoading ? (
+              <span className="flex items-center gap-2">
+                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                </svg>
+                Verifying…
+              </span>
+            ) : profile?.leetcode_username ? "Update" : "Link Account"}
           </button>
         </div>
       </div>

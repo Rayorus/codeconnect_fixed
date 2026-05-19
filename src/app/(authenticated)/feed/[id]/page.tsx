@@ -26,27 +26,32 @@ export default async function PostPage({ params }: { params: Promise<{ id: strin
     .order("created_at", { ascending: true });
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
-      <Link href="/feed" className="flex items-center gap-1.5 text-sm text-lc-muted hover:text-lc-text transition-colors mb-5">
+    <div className="p-4 pt-14 md:pt-6 md:p-8 max-w-2xl mx-auto">
+      <Link href="/feed" className="flex items-center gap-1.5 text-sm text-cc-muted hover:text-cc-text transition-colors mb-6 px-3 py-1.5 rounded-lg hover:bg-cc-hover w-fit">
         <ArrowLeft size={14} /> Back to Feed
       </Link>
 
-      <div className="bg-lc-surface border border-lc-border rounded-xl p-6 mb-5">
-        <div className="flex items-center gap-2 text-xs text-lc-muted mb-3">
-          <span className="font-mono text-lc-text">{(post.author as { username: string } | null)?.username}</span>
-          <span>·</span>
-          <span>{timeAgo(post.created_at)}</span>
+      <div className="glass-card !p-7 mb-6">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-cc-accent to-cc-violet flex items-center justify-center text-white text-xs font-bold shadow-glow-sm">
+            {(post.author as { username: string } | null)?.username?.[0]?.toUpperCase()}
+          </div>
+          <div className="text-xs text-cc-muted">
+            <span className="font-mono text-cc-text font-medium">{(post.author as { username: string } | null)?.username}</span>
+            <span className="mx-1.5">·</span>
+            <span>{timeAgo(post.created_at)}</span>
+          </div>
         </div>
 
-        <h1 className="text-xl font-bold text-lc-text mb-3">{post.title}</h1>
-        <p className="text-lc-muted text-sm leading-relaxed whitespace-pre-wrap mb-4">{post.content}</p>
+        <h1 className="text-xl font-bold text-cc-text mb-3">{post.title}</h1>
+        <p className="text-cc-muted text-sm leading-relaxed whitespace-pre-wrap mb-5">{post.content}</p>
 
         {post.problem_title && (
           <a
             href={post.problem_url || "#"}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-sm text-lc-link hover:underline mb-4"
+            className="inline-flex items-center gap-1.5 text-sm text-cc-link hover:text-cc-accent-light mb-4 transition-colors"
           >
             <ExternalLink size={13} />
             {post.problem_title}

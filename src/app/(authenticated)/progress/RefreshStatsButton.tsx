@@ -47,12 +47,12 @@ export default function RefreshStatsButton({
       <button
         onClick={handleRefresh}
         disabled={loading}
-        className="flex items-center gap-1.5 text-sm text-lc-muted hover:text-lc-accent transition-colors disabled:opacity-50"
+        className="flex items-center gap-1.5 text-sm text-cc-muted hover:text-cc-accent-light transition-all duration-200 disabled:opacity-50 px-3 py-1.5 rounded-lg hover:bg-cc-hover"
       >
         <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
         {loading ? "Refreshing…" : "Refresh"}
       </button>
-      {msg && <span className="text-xs text-lc-easy">{msg}</span>}
+      {msg && <span className="text-xs text-cc-easy animate-fade-in">{msg}</span>}
     </div>
   );
 }

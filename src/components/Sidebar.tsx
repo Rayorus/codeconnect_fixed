@@ -2,18 +2,13 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
-  LayoutDashboard,
-  Users,
-  MessageSquare,
-  TrendingUp,
-  User,
-  LogOut,
-  BarChart3,
-  Rss,
+  LayoutDashboard, Users, MessageSquare, TrendingUp,
+  User, LogOut, BarChart3, Rss, X, Sparkles, Code2
 } from "lucide-react";
 
 const navItems = [
@@ -23,99 +18,112 @@ const navItems = [
   { href: "/progress", icon: TrendingUp, label: "Progress" },
   { href: "/friends", icon: Users, label: "Friends" },
   { href: "/chat", icon: MessageSquare, label: "Messages" },
-  { href: "/ai", icon: function RobotIcon(props: React.SVGProps<SVGSVGElement>) {
-    return (
-      <svg width="22" height="22" viewBox="0 0 40 40" fill="none" {...props}>
-        <rect x="8" y="12" width="24" height="16" rx="6" fill="#fff" stroke="#00796b" strokeWidth="2" />
-        <circle cx="16" cy="20" r="2" fill="#00796b" />
-        <circle cx="24" cy="20" r="2" fill="#00796b" />
-        <rect x="18" y="26" width="4" height="2" rx="1" fill="#00796b" />
-        <rect x="19" y="8" width="2" height="4" rx="1" fill="#00796b" />
-      </svg>
-    );
-  }, label: "AI Mentor" },
+  { href: "/ai", icon: Sparkles, label: "AI Mentor" },
   { href: "/profile", icon: User, label: "Profile" },
-  { href: "/compiler", icon: BarChart3, label: "Compiler" },
+  { href: "/compiler", icon: Code2, label: "Compiler" },
 ];
 
 export default function Sidebar({ username, mobileOpen = false, onClose }: { username: string; mobileOpen?: boolean; onClose?: () => void }) {
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClient();
-  const [displayName, setDisplayName] = useState<string | null>(null);
+  const [loggingOut, setLoggingOut] = useState(false);
 
   async function handleLogout() {
+    setLoggingOut(true);
     await supabase.auth.signOut();
     router.push("/");
     router.refresh();
   }
+
   return (
-    <aside
-      className={cn(
-        "fixed left-0 top-0 h-full w-56 bg-lc-surface border-r border-lc-border flex flex-col z-30",
-        "hidden md:flex",
-        mobileOpen ? "flex animate-slide-in" : ""
-      )}
-      style={mobileOpen ? { display: "flex" } : undefined}
-    >
-      {/* Mobile close button */}
+    <>
+      {/* Mobile overlay backdrop */}
       {mobileOpen && (
-        <button
-          className="absolute top-4 right-4 z-40 p-2 rounded-lg bg-lc-card border border-lc-border md:hidden"
-          aria-label="Close sidebar"
+        <div
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-30 md:hidden"
           onClick={onClose}
-        >
-          <span className="block w-6 h-0.5 bg-lc-text rotate-45 mb-1" />
-          <span className="block w-6 h-0.5 bg-lc-text -rotate-45" />
-        </button>
+          style={{ animation: "fadeIn 0.15s ease" }}
+        />
       )}
-      {/* Logo */}
-      <div className="px-4 py-5 border-b border-lc-border">
-        <Link href="/dashboard" className="flex items-center gap-2">
-          <span className="text-lc-accent font-mono font-bold text-lg">&lt;CC/&gt;</span>
-          <span className="text-lc-text font-semibold">CodeConnect</span>
-        </Link>
-      </div>
-      {/* Navigation */}
-      <nav className="flex-1 px-2 py-4 space-y-1">
-        {navItems.map(({ href, icon: Icon, label }) => {
-          const isActive = pathname === href || pathname.startsWith(href + "/");
-          return (
-            <Link
-              key={href}
-              href={href}
-              className={cn(
-                "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
-                isActive
-                  ? "bg-lc-accent/10 text-lc-accent"
-                  : "text-lc-muted hover:text-lc-text hover:bg-lc-hover"
-              )}
-            >
-              <Icon size={16} />
-              {label}
-            </Link>
-          );
-        })}
-      </nav>
-      {/* User + Logout */}
-      <div className="px-2 py-4 border-t border-lc-border space-y-1">
-        <Link
-          href="/profile"
-          className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-lc-hover transition-colors"
-        >
-          <div className="w-7 h-7 rounded-full bg-lc-accent/20 flex items-center justify-center text-lc-accent text-xs font-bold">
-            {(displayName || username)?.[0]?.toUpperCase()}
-          </div>
-          <span className="text-sm text-lc-text font-mono truncate">{displayName || username}</span>
-        </Link>
-        <button
-          onClick={handleLogout}
-          className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-lc-muted hover:text-lc-hard hover:bg-lc-hard/10 transition-colors text-sm"
-        >
-          <LogOut size={16} />
-          Sign out
-        </button>
-      </div>
-    </aside>
+
+      <aside
+        className={cn(
+          "fixed left-0 top-0 h-[100dvh] w-60 flex flex-col z-40",
+          "glass border-r border-cc-border",
+          "transition-transform duration-200",
+          mobileOpen
+            ? "translate-x-0 animate-slide-in"
+            : "-translate-x-full md:translate-x-0",
+          !mobileOpen && "hidden md:flex"
+        )}
+      >
+        {/* Mobile close */}
+        {mobileOpen && (
+          <button
+            className="absolute top-3 right-3 z-50 p-2 rounded-xl hover:bg-cc-hover transition-colors md:hidden tap-scale-sm"
+            aria-label="Close sidebar"
+            onClick={onClose}
+          >
+            <X size={16} className="text-cc-muted" />
+          </button>
+        )}
+
+        {/* Logo */}
+        <div className="px-4 py-5 border-b border-cc-border">
+          <Link href="/dashboard" className="flex items-center gap-2.5 group tap-scale-sm">
+            <span className="text-cc-accent font-mono font-bold text-lg">&lt;CC/&gt;</span>
+            <span className="text-cc-text font-semibold tracking-tight">CodeConnect</span>
+          </Link>
+        </div>
+
+        {/* Nav */}
+        <nav className="flex-1 px-2.5 py-4 space-y-0.5 overflow-y-auto">
+          {navItems.map(({ href, icon: Icon, label }) => {
+            const isActive = pathname === href || pathname.startsWith(href + "/");
+            return (
+              <Link
+                key={href}
+                href={href}
+                className={cn("sidebar-nav-item relative overflow-hidden", isActive ? "active" : "")}
+                onClick={onClose}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="sidebarActiveTab"
+                    className="absolute inset-0 bg-cc-accent/8 rounded-xl"
+                    transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                  />
+                )}
+                <Icon size={16} className="relative z-10" />
+                <span className="relative z-10">{label}</span>
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* User footer */}
+        <div className="px-2.5 py-3 border-t border-cc-border space-y-0.5">
+          <Link
+            href="/profile"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-cc-hover transition-colors tap-scale-sm"
+            onClick={onClose}
+          >
+            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-cc-accent to-cc-violet flex items-center justify-center text-white text-xs font-bold">
+              {username?.[0]?.toUpperCase()}
+            </div>
+            <span className="text-sm text-cc-text font-mono truncate">{username}</span>
+          </Link>
+          <button
+            onClick={handleLogout}
+            disabled={loggingOut}
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-cc-muted hover:text-cc-hard hover:bg-cc-hard/5 transition-colors text-sm tap-scale-sm disabled:opacity-50"
+          >
+            <LogOut size={16} />
+            {loggingOut ? "Signing out…" : "Sign out"}
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }

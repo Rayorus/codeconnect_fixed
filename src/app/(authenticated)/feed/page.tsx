@@ -25,7 +25,7 @@ export default async function FeedPage() {
   const likedIds = new Set((likedPosts || []).map((l) => l.post_id));
 
   return (
-    <div className="p-6 max-w-3xl mx-auto">
+    <div className="p-4 pt-14 md:pt-6 md:p-8 max-w-3xl w-full mx-auto">
       <FeedClient
         currentUserId={user.id}
         posts={(posts as any) || []}

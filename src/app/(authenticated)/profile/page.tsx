@@ -26,7 +26,7 @@ export default async function ProfilePage() {
     .single();
 
   return (
-    <div className="p-6 max-w-2xl mx-auto">
+    <div className="p-4 pt-14 md:pt-6 md:p-8 max-w-2xl mx-auto">
       <ProfileClient userId={user.id} profile={profile} />
     </div>
   );
